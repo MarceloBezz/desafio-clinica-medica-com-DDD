@@ -54,4 +54,8 @@ public class Medico {
     public Endereco getEndereco() {
         return endereco;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

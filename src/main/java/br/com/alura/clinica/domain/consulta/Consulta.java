@@ -34,7 +34,7 @@ public class Consulta {
         Objects.requireNonNull(paciente, "O paciente da consulta não pode ser nulo!");
         Objects.requireNonNull(data, "A data da consulta não pode ser nula!");
         if (LocalDateTime.now().isBefore(data))
-            throw new RuntimeException("A consulta não pode ser agendada em uma data passada!");
+            throw new IllegalArgumentException("A consulta não pode ser agendada em uma data passada!");
 
         this.medico = medico;
         this.paciente = paciente;
@@ -65,12 +65,16 @@ public class Consulta {
 
     public void reagendar(LocalDateTime data) {
         if (Duration.between(data, LocalDateTime.now()).toDays() < 2)
-            throw new RuntimeException("Você só pode remarcar consultas com até dois dias de antecedência!");
+            throw new IllegalArgumentException("Você só pode remarcar consultas com até dois dias de antecedência!");
         
         this.data = data;
     }
 
     public void cancelaConsulta() {
         this.status = StatusConsulta.CANCELADA;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -32,7 +32,7 @@ public class PacienteController {
         try {
             Paciente pacienteCadastrado = pacienteService.cadastrar(dto);
             URI uri = uriBuilder
-                    .path("/medicos/{crm}")
+                    .path("/pacientes/{id}")
                     .buildAndExpand(pacienteCadastrado.getId())
                     .toUri();
 

@@ -3,7 +3,6 @@ package br.com.alura.clinica.domain.consulta;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 import br.com.alura.clinica.domain.medico.Medico;
 import br.com.alura.clinica.domain.paciente.Paciente;
@@ -14,10 +13,10 @@ import jakarta.persistence.*;
 public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uuid;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medico_crm")
+    @JoinColumn(name = "medico_id")
     private Medico medico;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +26,8 @@ public class Consulta {
 
     @Enumerated(EnumType.STRING)
     private StatusConsulta status;
+
+    public Consulta() {}
 
     public Consulta(Medico medico, Paciente paciente, LocalDateTime data) {
         Objects.requireNonNull(medico, "O médico da consulta não pode ser nulo!");

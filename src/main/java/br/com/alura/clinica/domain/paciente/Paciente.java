@@ -4,7 +4,6 @@ import br.com.alura.clinica.domain.Endereco;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "pacientes")
@@ -22,6 +21,8 @@ public class Paciente {
 
     @Column(unique = true)
     private String email;
+
+    public Paciente() {}
 
     public Paciente(String nome, String cpf, Endereco endereco, String email) {
         if (!cpf.matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}"))

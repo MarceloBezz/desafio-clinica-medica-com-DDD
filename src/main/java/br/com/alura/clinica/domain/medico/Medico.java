@@ -20,6 +20,8 @@ public class Medico {
     @Embedded
     private Endereco endereco;
 
+    public Medico() {}
+
     public Medico(String nome, String crm, Especialidade especialidade, Endereco endereco) {
         if (nome.isEmpty() || crm.isEmpty())
             throw new IllegalArgumentException("Preencha todos os campos corretamente!");

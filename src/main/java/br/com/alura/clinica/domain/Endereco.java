@@ -9,6 +9,8 @@ public class Endereco {
     private Integer numero;
     private String complemento;
 
+    public Endereco() {}
+
     public Endereco(String rua, String cep, Integer numero, String complemento) {
         if (rua == null || rua.isEmpty() || cep == null || cep.isEmpty() || numero == null)
             throw new RuntimeException("Preencha o endereço corretamente!");

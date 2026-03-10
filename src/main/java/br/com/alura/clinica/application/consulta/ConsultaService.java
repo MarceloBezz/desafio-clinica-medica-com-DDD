@@ -8,6 +8,7 @@ import br.com.alura.clinica.domain.paciente.Paciente;
 import br.com.alura.clinica.infra.repositories.ConsultaRepository;
 import br.com.alura.clinica.infra.repositories.MedicoRepository;
 import br.com.alura.clinica.infra.repositories.PacienteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -25,12 +26,12 @@ public class ConsultaService {
 
     public Consulta agendarConsulta(DadosConsulta dto) {
         Medico medico = medicoRepository.findById(dto.medicoId())
-                .orElseThrow(() -> new RuntimeException("ID do médico inválido!"));
+                .orElseThrow(() -> new EntityNotFoundException("ID do médico inválido!"));
         Paciente paciente = pacienteRepository.findById(dto.pacienteId())
-                .orElseThrow(() -> new RuntimeException("ID do paciente inválido!"));
+                .orElseThrow(() -> new EntityNotFoundException("ID do paciente inválido!"));
 
         if (consultaRepository.findByDataAndMedico(dto.data(), medico).isPresent())
-            throw new RuntimeException("Consulta já agendada com esse médico neste horário!");
+            throw new IllegalArgumentException("Consulta já agendada com esse médico neste horário!");
 
         Consulta consulta = new Consulta(medico, paciente, dto.data());
         return consultaRepository.save(consulta);
@@ -38,7 +39,7 @@ public class ConsultaService {
 
     public DadosConsulta buscarPorId(Long id) {
         var consulta = consultaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Consulta não encontrada!"));
+                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada!"));
 
         return new DadosConsulta(consulta);
     }
@@ -46,7 +47,7 @@ public class ConsultaService {
     @Transactional
     public void cancelarConsulta(Long id) {
         var consulta = consultaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Consulta não encontrada!"));
+                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada!"));
         consulta.cancelaConsulta(); 
     }
 

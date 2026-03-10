@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.alura.clinica.domain.paciente.Paciente;
 import br.com.alura.clinica.infra.repositories.PacienteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -19,7 +20,7 @@ public class PacienteService {
     public Paciente cadastrar(DadosPaciente dto) {
         Paciente paciente = new Paciente(dto.nome(), dto.cpf(), dto.endereco(), dto.email());
         if (pacienteRepository.findByCpf(dto.cpf()).get() != null)
-            throw new RuntimeException("CPF já cadastrado!");
+            throw new IllegalArgumentException("CPF já cadastrado!");
 
         return pacienteRepository.save(paciente);
     }
@@ -35,7 +36,7 @@ public class PacienteService {
     public DadosPaciente buscarPorId(Long id) {
         Paciente paciente = pacienteRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("ID do médico não encontrado!"));
+                .orElseThrow(() -> new EntityNotFoundException("ID do médico não encontrado!"));
 
         return new DadosPaciente(paciente);
     }
@@ -44,7 +45,7 @@ public class PacienteService {
     public DadosPaciente atualizar(DadosAtualizaPaciente dto, Long id) {
         Paciente paciente = pacienteRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("ID do médico não encontrado!"));
+                .orElseThrow(() -> new EntityNotFoundException("ID do médico não encontrado!"));
 
         paciente.alteraPaciente(dto.nome(), dto.email(), dto.endereco());
         return new DadosPaciente(paciente);
@@ -54,7 +55,7 @@ public class PacienteService {
     public void deletar(Long id) {
         Paciente paciente = pacienteRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("ID do médico não encontrado!"));
+                .orElseThrow(() -> new EntityNotFoundException("ID do médico não encontrado!"));
 
         pacienteRepository.delete(paciente);
     }

@@ -26,10 +26,10 @@ public class Paciente {
 
     public Paciente(String nome, String cpf, Endereco endereco, String email) {
         if (!cpf.matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}"))
-            throw new RuntimeException("CPF em formato inválido!");
+            throw new IllegalArgumentException("CPF em formato inválido!");
 
         if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
-            throw new RuntimeException("Email em formato inválido!");
+            throw new IllegalArgumentException("Email em formato inválido!");
 
         if (nome.isEmpty() || email.isEmpty())
             throw new IllegalArgumentException("Preencha todos os campos!");

@@ -13,7 +13,7 @@ public class Endereco {
 
     public Endereco(String rua, String cep, Integer numero, String complemento) {
         if (rua == null || rua.isEmpty() || cep == null || cep.isEmpty() || numero == null)
-            throw new RuntimeException("Preencha o endereço corretamente!");
+            throw new IllegalArgumentException("Preencha o endereço corretamente!");
         
         this.rua = rua;
         this.cep = cep;

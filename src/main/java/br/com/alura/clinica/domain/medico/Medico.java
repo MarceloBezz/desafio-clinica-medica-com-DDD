@@ -2,6 +2,8 @@ package br.com.alura.clinica.domain.medico;
 
 import br.com.alura.clinica.domain.Endereco;
 
+import java.util.Objects;
+
 public class Medico {
     private String nome;
     private String crm;
@@ -9,14 +11,20 @@ public class Medico {
     private Endereco endereco;
 
     public Medico(String nome, String crm, Especialidade especialidade, Endereco endereco) {
-        if (nome == null || crm == null || endereco == null || especialidade == null) {
-            throw new RuntimeException("Preencha as informações do cadastro corretamente!");
-        }
-    
-        this.nome = nome;
-        this.crm = crm;
-        this.especialidade = especialidade;
-        this.endereco = endereco;
+        if (nome.isEmpty() || crm.isEmpty())
+            throw new IllegalArgumentException("Preencha todos os campos corretamente!");
+
+        this.nome = Objects.requireNonNull(nome, "Nome é obrigatório");
+        this.crm = Objects.requireNonNull(crm, "CRM é obrigatório");
+        this.especialidade = Objects.requireNonNull(especialidade, "Especialidade é obrigatória");
+        this.endereco = Objects.requireNonNull(endereco, "Endereço é obrigatório");
+    }
+
+    public void alteraMedico(Especialidade especialidade, Endereco endereco) {
+        if (especialidade != null)
+            this.especialidade = especialidade;
+        if (endereco != null)
+            this.endereco = endereco;
     }
 
     public String getNome() {
@@ -31,15 +39,7 @@ public class Medico {
         return especialidade;
     }
 
-    public void setEspecialidade(Especialidade especialidade) {
-        this.especialidade = especialidade;
-    }
-
     public Endereco getEndereco() {
         return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 }

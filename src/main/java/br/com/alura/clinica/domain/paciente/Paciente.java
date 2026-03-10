@@ -2,9 +2,11 @@ package br.com.alura.clinica.domain.paciente;
 
 import br.com.alura.clinica.domain.Endereco;
 
+import java.util.Objects;
+
 public class Paciente {
     private String nome;
-    private String cpf;
+    private final String cpf;
     private Endereco endereco;
     private String email;
 
@@ -15,10 +17,22 @@ public class Paciente {
         if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
             throw new RuntimeException("Email em formato inválido!");
 
-        this.nome = nome;
-        this.cpf = cpf;
-        this.endereco = endereco;
-        this.email = email;
+        if (nome.isEmpty() || email.isEmpty())
+            throw new IllegalArgumentException("Preencha todos os campos!");
+
+        this.nome = Objects.requireNonNull(nome, "O nome é obrigatório");
+        this.cpf = Objects.requireNonNull(cpf, "O CPF é obrigatório");;
+        this.endereco = Objects.requireNonNull(endereco, "O endereço é obrigatório");;
+        this.email = Objects.requireNonNull(email, "O email é obrigatório");;
+    }
+
+    public void alteraPaciente(String nome, String email, Endereco endereco) {
+        if (nome != null && !nome.isEmpty())
+            this.nome = nome;
+        if (email != null && !email.isEmpty())
+            this.email = email;
+        if (endereco != null)
+            this.endereco = endereco;
     }
 
     public String getNome() {
@@ -35,17 +49,5 @@ public class Paciente {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

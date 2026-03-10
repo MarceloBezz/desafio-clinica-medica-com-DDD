@@ -19,7 +19,7 @@ public class PacienteService {
 
     public Paciente cadastrar(DadosPaciente dto) {
         Paciente paciente = new Paciente(dto.nome(), dto.cpf(), dto.endereco(), dto.email());
-        if (pacienteRepository.findByCpf(dto.cpf()).get() != null)
+        if (pacienteRepository.findByCpf(dto.cpf()).isPresent())
             throw new IllegalArgumentException("CPF já cadastrado!");
 
         return pacienteRepository.save(paciente);

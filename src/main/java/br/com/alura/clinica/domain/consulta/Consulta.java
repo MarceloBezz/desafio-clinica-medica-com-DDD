@@ -33,7 +33,7 @@ public class Consulta {
         Objects.requireNonNull(medico, "O médico da consulta não pode ser nulo!");
         Objects.requireNonNull(paciente, "O paciente da consulta não pode ser nulo!");
         Objects.requireNonNull(data, "A data da consulta não pode ser nula!");
-        if (LocalDateTime.now().isBefore(data))
+        if (!LocalDateTime.now().isBefore(data))
             throw new IllegalArgumentException("A consulta não pode ser agendada em uma data passada!");
 
         this.medico = medico;

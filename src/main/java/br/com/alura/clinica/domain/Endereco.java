@@ -1,5 +1,8 @@
 package br.com.alura.clinica.domain;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Endereco {
     private String rua;
     private String cep;

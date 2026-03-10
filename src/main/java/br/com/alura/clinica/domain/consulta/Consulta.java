@@ -3,14 +3,29 @@ package br.com.alura.clinica.domain.consulta;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 import br.com.alura.clinica.domain.medico.Medico;
 import br.com.alura.clinica.domain.paciente.Paciente;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "consultas")
 public class Consulta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long uuid;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medico_crm")
     private Medico medico;
-    private final Paciente paciente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
     private LocalDateTime data;
+
+    @Enumerated(EnumType.STRING)
     private StatusConsulta status;
 
     public Consulta(Medico medico, Paciente paciente, LocalDateTime data) {

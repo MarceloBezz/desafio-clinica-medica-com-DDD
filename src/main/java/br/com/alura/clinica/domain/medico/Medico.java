@@ -1,13 +1,23 @@
 package br.com.alura.clinica.domain.medico;
 
 import br.com.alura.clinica.domain.Endereco;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity
+@Table(name = "medicos")
 public class Medico {
-    private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String crm;
+    private String nome;
+
+    @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
+
+    @Embedded
     private Endereco endereco;
 
     public Medico(String nome, String crm, Especialidade especialidade, Endereco endereco) {
